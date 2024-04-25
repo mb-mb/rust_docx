@@ -1,0 +1,16 @@
+[package]
+name = "rust_doc"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+docx-rs = "0.4.15"
+serde_json = "1.0.116"
+rfd = "0.14.1"
+anyhow = "1.0.82"
+egui = "0.27.2"
+eframe = "0.27.2"
+winapi = {version = "0.3.9", features = ["minwindef", "fileapi", "winbase", "winnt"] }
+windows = "0.56.0"
