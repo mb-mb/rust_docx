@@ -1,4 +1,4 @@
-# 🖌 rust_doc - a simple app to show a directory 
+# 🖌 rust_docx - a simple app to show a directory 
 
 
 <div align="center">
@@ -6,14 +6,12 @@
 
 </div>
 
----
-
-👉 Rust_Doc 👈
+👉 Rust_Docx 👈
 
 **NOTE**: This is just for the demo app 
 
 ## State
-rust_doc is in active development
+rust_docx is in active development
 
 <div align="center">
 <a href="https://www.rerun.io/"><img src="media/rerun_io_logo.png" width="440"></a>
