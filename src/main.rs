@@ -2,10 +2,9 @@
 
 #[path = "control/controller.rs"] mod control;
 
-
 use std::collections::HashMap;
 
-use control::{init_checkboxes, load_ini_file, load_word_file, Controller, LoadResult};
+use control::{init_checkboxes, load_ini_file,  Controller, LoadResult};
 use egui::{menu, CentralPanel, Context, Grid, Label, Pos2, SidePanel, TopBottomPanel, Ui, Vec2, ViewportBuilder, ViewportCommand, Visuals};
 use eframe::egui;
 
@@ -15,6 +14,7 @@ struct MyApp {
     show_confirmation_dialog: bool,
     allowed_to_close: bool,
     controller: control::Controller,
+    pending_updates: bool,
 }
  
 impl MyApp {
@@ -25,13 +25,17 @@ impl MyApp {
             show_confirmation_dialog: false,
             allowed_to_close: false,
             controller,
+            pending_updates: true,
         }
     }
 }
 
+
 impl eframe::App for MyApp {
+    
     fn update(&mut self, ctx: &Context, _frame: &mut eframe::Frame) {
 
+        if self.pending_updates {
         TopBottomPanel::top("top_panel0").show(ctx, |ui| {
             menu::bar(ui, |ui| {
                 ui.menu_button("Programas", |ui| {
@@ -68,14 +72,14 @@ impl eframe::App for MyApp {
                                     self.controller.checked_macro(&mut tessa, &item.to_string());
                                 }
                             });
-                        };                        
+                        };     
+                                          
                     });
                 });
             });
 
 
-        CentralPanel::default().show(ctx, |_ui| {
-            
+        CentralPanel::default().show(ctx, |_ui| {            
             // ScrollArea::vertical().stick_to_bottom(true).show(ui, |ui|{
             //     ui.label(&self.text);
             // });
@@ -89,13 +93,16 @@ impl eframe::App for MyApp {
             // });
 
             TopBottomPanel::top("my_central_top_panel").show(ctx, |ui|{
+                
                 if ui.label("file").clicked() {
                     self.controller.select_file(); 
-                    let _ = load_word_file();
+                    let _ = self.controller.load_word_file();
+                    self.pending_updates = false;                    
                 }
                 ui.heading(self.controller.file_to_process());
             });
 
+            
             SidePanel::left("my_central_left_panel")
                 .min_width(251.0)
                 .show(ctx, |ui| {
@@ -105,6 +112,7 @@ impl eframe::App for MyApp {
                         for (item, _) in unprocessed {        
                             ui.add(Label::new(item));
                         }
+                       //self.pending_updates = false;
                     });
                 });
 
@@ -169,7 +177,7 @@ impl eframe::App for MyApp {
             
         });
 
-
+        }
     }
     
 }
@@ -178,7 +186,7 @@ pub fn main() -> Result<(), eframe::Error> {
     // env_logger::init();
     let mut controller = Controller::new(HashMap::new());
     let load_ini_file = load_ini_file();
-
+    
     match load_ini_file {
         Ok(LoadResult::Success(json_file)) => {
             // let ret = LoadResult::Success(jsonfile);            

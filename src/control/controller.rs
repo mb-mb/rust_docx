@@ -139,7 +139,22 @@ impl Controller {
         Ok(buf)
     }
 
+    pub fn load_word_file(&mut self) -> Result<(), Error> {
+        // let hwdnd = crate::control::win_conn::hwnd;
+        // let xml_var = crate::control::win_conn::xml_var;
+        // let xml_file = crate::control::win_conn::update_bibliography(hwdnd, xml_var);
+        let file_path = "c:\\Users\\mabia\\projects\\word_processor\\assets\\doc_origem.docx";
+        // crate::control::win_conn::open_word();
+        // crate::control::win_conn::open_any_file(file_path);
+        let mut macros = crate::control::win_conn::show_macros(&file_path);
+        macros.sort();
 
+        for macrox in macros.iter() {
+            self.checkboxes.insert(macrox.to_string(), true);
+        }
+        Ok(())
+    
+    }
 
 }
 
@@ -174,14 +189,7 @@ pub fn load_ini_file() -> Result<LoadResult,  Error> {
 
 }
 
-pub fn load_word_file() -> Result<(), Error> {
-    // let hwdnd = crate::control::win_conn::hwnd;
-    // let xml_var = crate::control::win_conn::xml_var;
-    // let xml_file = crate::control::win_conn::update_bibliography(hwdnd, xml_var);
-    crate::control::win_conn::open_word();
-    Ok(())
 
-}
 
 
 //let file_path = std::path::Path::new("resources/init.cfg");
