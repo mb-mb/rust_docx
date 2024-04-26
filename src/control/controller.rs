@@ -37,11 +37,9 @@ impl Controller {
 
 
         self.checkboxes.insert(macro_text.to_string(), false);
-        //self.messages.push(format!("Macro {} adicionada!", macro_text));
     }
 
     fn rem_macro(id: usize, controller: &mut Controller) {
-        //controller.messages.push(format!("Macro {} removida!", id.to_string()));
     }    
 
     pub fn macros(&self) -> HashMap<String, bool> {
@@ -87,10 +85,6 @@ impl Controller {
 
 
     pub fn checked_macro(&mut self, is_checked: &mut bool, macro_text: &String) {
-        // if let entry = self.checkboxes.entry(macro_text.clone()) {
-        //     *entry.or_insert(false) = *is_checked;
-        // }
-
         for (item, checked) in self.checkboxes.iter_mut() {
             if item == macro_text {
                 *checked = *is_checked;
@@ -100,7 +94,6 @@ impl Controller {
     }
 
     pub fn execute_vba_macro(&self, path: String, macro_name: String) -> Result<(), DocxError> {
-        //let mut buffer = Vec::new();
         let path = std::path::Path::new(&self.description_file_to_process);    
         let file = std::fs::File::create(path).unwrap();
         let docx = Docx::new()
@@ -108,28 +101,6 @@ impl Controller {
                             .pack(file)?;
         
         Ok(())
-
-        /*
-            let path = std::path::Path::new("./output/examples/hello.docx");
-    let file = std::fs::File::create(path).unwrap();
-    Docx::new()
-        .add_paragraph(Paragraph::new().add_run(Run::new().add_text("Hello")))
-        .build()
-        .pack(file)?;
-    Ok(())
-        
-         */
-                
-        // let doc = docx_rs::read_docx(&mut buffer);      
-        // if let Ok(doc) = docx_rs::read_docx(&mut buffer) {
-            
-        //     let macro_code = extract_macro_code(&doc, macro_name);
-        //     execute_vba_macro_code(&macro_code);
-
-        //     let buffer = ldoc;
-        //     ldoc.write_file(self.description_file_to_process);
-
-        // }      
 
     }
 
@@ -140,12 +111,7 @@ impl Controller {
     }
 
     pub fn load_word_file(&mut self) -> Result<(), Error> {
-        // let hwdnd = crate::control::win_conn::hwnd;
-        // let xml_var = crate::control::win_conn::xml_var;
-        // let xml_file = crate::control::win_conn::update_bibliography(hwdnd, xml_var);
-        let file_path = "c:\\Users\\mabia\\projects\\word_processor\\assets\\doc_origem.docx";
-        // crate::control::win_conn::open_word();
-        // crate::control::win_conn::open_any_file(file_path);
+        let file_path = "c:\\Users\\projects\\doc_origem.docx";
         let mut macros = crate::control::win_conn::show_macros(&file_path);
         macros.sort();
 
@@ -168,10 +134,6 @@ pub fn init_checkboxes(ini_file: Value)-> HashMap<String, bool>{
             }        
         }
     }
-
-    // cb.insert(String::from("TRANSITO"),false);
-    // cb.insert(String::from("MAIUSCULAS"), false); 
-    // cb.insert(String::from("MINUSCULAS"),false);
     cb
 }
 
@@ -188,20 +150,3 @@ pub fn load_ini_file() -> Result<LoadResult,  Error> {
     }
 
 }
-
-
-
-
-//let file_path = std::path::Path::new("resources/init.cfg");
-//let file_content = fs::read_to_string(file_path)?; // Use try? for error handling
-
-//let json_file = serde_json::from_str(&file_content)?;
-
-// Access the "macro" item
-// let macro_value = json_file.get("macro").and_then(|v| v.as_str());
-
-// match macro_value {
-//     Some(value) => Ok(value.to_string()), // Convert string slice to owned String
-//     None => Err(serde_json::Error::is_syntax),// Handle missing field
-// }
-// Ok(())

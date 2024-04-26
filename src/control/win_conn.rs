@@ -1,13 +1,9 @@
 extern crate zip;
-
-use std::ffi::OsStr;
-use std::fs;
 use std::fs::File;
 
 use std::io::Read;
 use walkdir::WalkDir;
 use zip::read::ZipArchive;
-use zip::read::ZipFile;
 use zip::result::ZipError;
 use std::ptr;
 use winapi::um::fileapi::ReadFile;
@@ -22,8 +18,6 @@ use std::result::Result;
 
 
 pub fn open_word() -> Result<(),Error> {
-    // let word_x = windows::core::w!("WordDocument");
-    // let h_file: HANDLE = ptr::null_mut();
     let file_path = "c:\\Users\\mabia\\projects\\word_processor\\assets\\doc_origem.docx";
     
     let mut buffer: [u8; 1024] = [0; 1024];
@@ -134,7 +128,6 @@ fn v1_listar_macros(file_name: &str) -> Result<Vec<String>, String> {
                 _ => format!("Erro ao abrir o arquivo ZIP: {}", e),
             };
             let io_error = Error::new(windows_result::HRESULT::default(), zip_error_message);
-            //return Err(io_error);
             return Err(io_error.to_string());
         },
     };
@@ -145,28 +138,9 @@ fn v1_listar_macros(file_name: &str) -> Result<Vec<String>, String> {
 
 
     for i in 0..archive.len() {
-        // let mut file = match archive.by_index(i) {
-        //     Ok(file) => file,
-        //     Err(err) => {
-        //         let zip_error_message = match err {
-        //             ZipError::Io(io_err) => io_err.to_string(),
-        //             _ => format!("Erro ao abrir o arquifo de dentro do arquivo ZIP: {}", err),
-        //         };
-        //         let io_error = Error::new(windows_result::HRESULT::default(), zip_error_message);                
-        //         return Err(io_error.to_string());
-        //     }            
-        // };
         let mut file = archive.by_index(i).unwrap();
-
         println!("arquivo com final xml: {:?}", file.enclosed_name() );            
-        // if file.name() == "word/document.xml" {                        
-        //     file.read_to_string(&mut contents).map_err(|e| {
-        //         return e;
-        //     });
-        //     // break;
-        // }
     }
-    // println!("conteudo do arquivo: \n{}", contents);
 
     if let Some(start_pos) = contents.find("word/vbaProject.bin") {
         let mut vba_project_bin = String::new();
@@ -222,29 +196,6 @@ fn v1_listar_macros(file_name: &str) -> Result<Vec<String>, String> {
             }
 
         }
-
-        //     let macro_start = "<w:binData";
-        //     let macro_end = "</w:binData>";
-        //     let mut start_index = 0;
-        //     while let Some(start_pos) = contents[start_index..].find(macro_start) {
-        //         start_index = start_index + start_pos;
-        //         if let Some(end_pos) = contents[start_index..].find(macro_end) {
-        //             let end_index = start_index + end_pos + macro_end.len();
-        //             let macro_content = &contents[start_index..end_index];
-        //             // extrai nome da macro
-        //             if let Some(name_start) = macro_content.find("Sub ") {
-        //                 let name_end = macro_content[name_start..].find('(').unwrap_or(macro_content.len());
-        //                 let macro_name = macro_content[name_start + "Sub ".len()..name_start + name_end].trim();
-        //                 macros.push(macro_name.to_string());
-        //             }
-        //             start_index = end_index;
-        //         } else {
-        //             break;
-        //         }
-        //     }
-        // } else {
-        //     println!("{}", file.name());
-        // }
        
     }
 
