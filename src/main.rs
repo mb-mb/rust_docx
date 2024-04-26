@@ -80,18 +80,6 @@ impl eframe::App for MyApp {
 
 
         CentralPanel::default().show(ctx, |_ui| {            
-            // ScrollArea::vertical().stick_to_bottom(true).show(ui, |ui|{
-            //     ui.label(&self.text);
-            // });
-            // Window::new("Dashboard").show(ctx, |ui| {
-            //     ui.add(Label::new("Macros list"));
-            // });
-
-            // Window::new("Completed tasks").show(ctx, |ui| {
-            //     ui.add(Label::new("1.-ZZZ01 - [ok]"));
-            //     button_main(ui, &mut self.counter, _frame)
-            // });
-
             TopBottomPanel::top("my_central_top_panel").show(ctx, |ui|{
                 
                 if ui.label("file").clicked() {
@@ -121,31 +109,6 @@ impl eframe::App for MyApp {
                     .show(ctx, |ui|{
                         ui.heading("processadas");
             });
-
-            
-
-            // self.ui_counter(ui);
-
-            // ui.add_space(10.0);
-
-            // if ui.add_sized([165., 30.], Button::new("Quit")).clicked() {
-            //     ctx.send_viewport_cmd(ViewportCommand::Close);
-            // };
-
-            // ui.label("ui.label");
-            
-            // ui.add(Label::new("ui.add"));
-            // button_main(ui, &mut self.counter, _frame);
-
-            // if ctx.input(|i| i.key_pressed(Key::C)) {
-            // //    self.text.clear();
-            // } else if ctx.input(|i|i.key_pressed(egui::Key::A)) {
-            // //    self.text.push_str("\nPressed");
-            // } else if ctx.input(|i| i.key_down(egui::Key::A)) {
-            // //    self.text.push_str("\nHeld");                
-            // } else if ctx.input(|i| i.key_released(egui::Key::A)) {
-            // //    self.text.push_str("\nRelease\n\n");
-            // }
 
             if ctx.input(|i| i.viewport().close_requested()) {
                 if self.allowed_to_close {
